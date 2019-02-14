@@ -14,7 +14,7 @@ def common_setup(script_name,
                  args=None,
                  logfile_prefix=None,
                  save_git_state=True,
-                 git_state_dir=Path('./git-state')):
+                 git_state_dir=Path(__file__).parent / 'git-state'):
     """Common setup for scripts that output to a directory.
     - Setup logging
     - Save git state
