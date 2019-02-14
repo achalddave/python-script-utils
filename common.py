@@ -1,7 +1,8 @@
-import utils.log as log_utils
 import logging
 import subprocess
 from pathlib import Path
+
+import log as log_utils
 
 
 def _to_path(x):
