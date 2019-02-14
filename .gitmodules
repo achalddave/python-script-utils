@@ -1,0 +1,3 @@
+[submodule "script_utils/git-state"]
+	path = script_utils/git-state
+	url = git@github.com:achalddave/git-state.git
