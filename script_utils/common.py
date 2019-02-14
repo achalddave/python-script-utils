@@ -14,7 +14,7 @@ def common_setup(script_name,
                  args=None,
                  logfile_prefix=None,
                  save_git_state=True,
-                 git_state_dir=Path('git-state')):
+                 git_state_dir=Path('./git-state')):
     """Common setup for scripts that output to a directory.
     - Setup logging
     - Save git state
@@ -46,7 +46,7 @@ def common_setup(script_name,
 
     if save_git_state:
         subprocess.call([
-            git_state_dir / 'save_git_state.sh',
+            str(git_state_dir / 'save_git_state.sh'),
             log_file.with_suffix('.git-state')
         ])
 
