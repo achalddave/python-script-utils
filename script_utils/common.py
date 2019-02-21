@@ -28,6 +28,10 @@ def common_setup(script_name,
             path is output_dir / (logfile_prefix + time + '.log'), where
             logfile_prefix by default is `script_name`.
         save_git_state (bool): Whether to save the git state.
+
+    Returns:
+        file_logger (logging.Logger): Logger instance that logs only to log
+            file, and not to stdout.
     """
 
     output_dir = _to_path(output_dir)
@@ -42,7 +46,7 @@ def common_setup(script_name,
             logfile_prefix = logfile_prefix.with_suffix(logfile_prefix.suffix +
                                                         '.log')
     log_file = log_utils.add_time_to_path(output_dir / logfile_prefix)
-    log_utils.setup_logging(log_file)
+    file_logger = log_utils.setup_logging(log_file)
 
     if save_git_state:
         subprocess.call([
@@ -53,3 +57,5 @@ def common_setup(script_name,
     if args is not None:
         import pprint
         logging.info('Args:\n%s', pprint.pformat(vars(args)))
+
+    return file_logger

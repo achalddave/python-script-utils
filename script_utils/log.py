@@ -47,3 +47,4 @@ def setup_logging(logging_filepath):
     logging.root.addHandler(console_handler)
 
     logging.info('Writing log file to %s', logging_filepath)
+    return file_logger
