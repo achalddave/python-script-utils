@@ -27,7 +27,7 @@ def setup_logging(logging_filepath):
 
     # Clear any previous changes to logging.
     logging.root.handlers = []
-    logging.root.setLevel(logging.INFO)
+    logging.root.setLevel(logging.DEBUG)
 
     file_handler = logging.FileHandler(logging_filepath)
     file_handler.setFormatter(
@@ -44,6 +44,7 @@ def setup_logging(logging_filepath):
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(
         logging.Formatter(log_format, datefmt=stream_date_format))
+    console_handler.setLevel(logging.INFO)
     logging.root.addHandler(console_handler)
 
     logging.info('Writing log file to %s', logging_filepath)
