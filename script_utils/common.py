@@ -13,6 +13,8 @@ def common_setup(script_name,
                  output_dir,
                  args=None,
                  logfile_prefix=None,
+                 log_console_level=logging.INFO,
+                 log_file_level=logging.DEBUG,
                  save_git_state=True,
                  git_state_dir=Path(__file__).parent / 'git-state'):
     """Common setup for scripts that output to a directory.
@@ -46,7 +48,8 @@ def common_setup(script_name,
             logfile_prefix = logfile_prefix.with_suffix(logfile_prefix.suffix +
                                                         '.log')
     log_file = log_utils.add_time_to_path(output_dir / logfile_prefix)
-    file_logger = log_utils.setup_logging(log_file)
+    file_logger = log_utils.setup_logging(
+        log_file, console_level=log_console_level, file_level=log_file_level)
 
     if save_git_state:
         subprocess.call([

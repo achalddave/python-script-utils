@@ -10,7 +10,9 @@ def add_time_to_path(logging_filepath):
                                       logging_filepath.suffix)
 
 
-def setup_logging(logging_filepath):
+def setup_logging(logging_filepath,
+                  console_level=logging.INFO,
+                  file_level=logging.DEBUG):
     """Setup root logger to log to file and stdout.
     All calls to logging will log to `logging_filepath` as well as stdout.
     Also creates a file logger that only logs to , which can
@@ -33,6 +35,7 @@ def setup_logging(logging_filepath):
     file_handler.setFormatter(
         logging.Formatter(log_format, datefmt=file_date_format))
     logging.root.addHandler(file_handler)
+    file_handler.setLevel(file_level)
 
     # Logger that logs only to file. We could also do this with levels, but
     # this allows logging specific messages regardless of level to the file
@@ -44,7 +47,7 @@ def setup_logging(logging_filepath):
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(
         logging.Formatter(log_format, datefmt=stream_date_format))
-    console_handler.setLevel(logging.INFO)
+    console_handler.setLevel(console_level)
     logging.root.addHandler(console_handler)
 
     logging.info('Writing log file to %s', logging_filepath)
