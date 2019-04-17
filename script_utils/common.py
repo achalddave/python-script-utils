@@ -23,7 +23,7 @@ def common_setup(script_name,
     - Log args to stdout and logging path
     Args:
         script_name (str): Script name. If this is a path (e.g. __file__), we
-            use just the stem.
+            use just the file path + '.log'.
         output_dir (Path)
         args: Output of parser.parse_args()
         logfile_prefix (str): Specify prefix for logging file. The logging file
@@ -39,7 +39,7 @@ def common_setup(script_name,
     output_dir = _to_path(output_dir)
     git_state_dir = _to_path(git_state_dir)
 
-    name = Path(script_name).stem
+    name = Path(script_name).name
     if logfile_prefix is None:
         logfile_prefix = name + '.log'
     else:
