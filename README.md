@@ -3,6 +3,11 @@
 Utility functions for python scripts (especially for research experiments) that
 I use across projects.
 
+## Installation
+
+```bash
+pip install -e git+https://github.com/achalddave/python-script-utils.git#egg=script_utils
+```
 
 ## Most common usage
 
