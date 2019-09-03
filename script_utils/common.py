@@ -50,6 +50,10 @@ def common_setup(log_name,
 
     if args is not None:
         import pprint
+        import sys
         logging.info('Args:\n%s', pprint.pformat(vars(args)))
+        args_pretty = 'python ' + (' '.join(
+            [('\\\n' + x) if x.startswith('-') else x for x in sys.argv]))
+        logging.debug('Full command:\n%s', args_pretty)
 
     return file_logger
