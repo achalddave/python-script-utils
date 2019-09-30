@@ -1,4 +1,6 @@
+import itertools
 import logging
+import traceback
 import subprocess
 from pathlib import Path
 
@@ -45,6 +47,14 @@ def common_setup(log_name,
     log_file = log_utils.add_time_to_path(output_dir / log_name)
     file_logger = log_utils.setup_logging(
         log_file, console_level=log_console_level, file_level=log_file_level)
+
+    # Print simplified stack trace so the log file contains the name of the
+    # scripts used in calling common_setup.
+    paths = [
+        f'{Path(x.filename).resolve()}, line {x.lineno}'
+        for x in traceback.extract_stack()
+    ]
+    logging.info('Trace of call to common_setup:\n' + ('\n'.join(paths)))
 
     if save_git_state:
         subprocess.call([
