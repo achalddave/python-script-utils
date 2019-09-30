@@ -52,9 +52,9 @@ def common_setup(log_name,
     # scripts used in calling common_setup.
     paths = [
         f'{Path(x.filename).resolve()}, line {x.lineno}'
-        for x in traceback.extract_stack()
+        for x in traceback.extract_stack()[:-1]
     ]
-    logging.info('Trace of call to common_setup:\n' + ('\n'.join(paths)))
+    logging.info('Called common_setup from:\n' + ('\n'.join(paths)))
 
     if save_git_state:
         subprocess.call([
