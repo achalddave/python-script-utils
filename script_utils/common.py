@@ -20,6 +20,10 @@ def common_setup(log_name,
     - Setup logging
     - Save git state
     - Log args to stdout and logging path
+
+    Example usage:
+        common_setup(__file__, args.output_dir, args)
+
     Args:
         log_name (str): Logging file name. If this is a path (e.g. __file__),
             we use just use the file name + time + '.log'.
