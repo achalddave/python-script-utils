@@ -11,6 +11,7 @@ def add_time_to_path(logging_filepath):
 
 
 def setup_logging(logging_filepath,
+                  logger=logging.root,
                   console_level=logging.INFO,
                   file_level=logging.DEBUG):
     """Setup root logger to log to file and stdout.
@@ -28,13 +29,13 @@ def setup_logging(logging_filepath,
     file_date_format = '%m/%d %H:%M:%S'
 
     # Clear any previous changes to logging.
-    logging.root.handlers = []
-    logging.root.setLevel(logging.DEBUG)
+    logger.handlers = []
+    logger.setLevel(logging.DEBUG)
 
     file_handler = logging.FileHandler(logging_filepath)
     file_handler.setFormatter(
         logging.Formatter(log_format, datefmt=file_date_format))
-    logging.root.addHandler(file_handler)
+    logger.addHandler(file_handler)
     file_handler.setLevel(file_level)
 
     # Logger that logs only to file. We could also do this with levels, but
@@ -48,7 +49,7 @@ def setup_logging(logging_filepath,
     console_handler.setFormatter(
         logging.Formatter(log_format, datefmt=stream_date_format))
     console_handler.setLevel(console_level)
-    logging.root.addHandler(console_handler)
+    logger.addHandler(console_handler)
 
     logging.info('Writing log file to %s', logging_filepath)
     return file_logger
