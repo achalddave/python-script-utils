@@ -49,7 +49,15 @@ def setup_logging(logging_filepath,
     console_handler.setFormatter(
         logging.Formatter(log_format, datefmt=stream_date_format))
     console_handler.setLevel(console_level)
-    logger.addHandler(console_handler)
+    if logger != logging.root:
+        # Remove the default console handler.
+        # TODO(achald): Make this more specific. Right now it removes all
+        # StreamHandlers, which may not be what we want to do.
+        logging.root.handlers = [
+            x for x in logging.root.handlers
+            if not isinstance(x, logging.StreamHandler)
+        ]
+    logging.root.addHandler(console_handler)
 
     logging.info('Writing log file to %s', logging_filepath)
     return file_logger
