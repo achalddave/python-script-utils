@@ -2,6 +2,25 @@ import logging
 from datetime import datetime
 from pathlib import Path
 
+from termcolor import colored
+
+
+# Modified from
+# https://github.com/facebookresearch/detectron2/blob/master/detectron2/utils/logger.py
+class _ColorfulFormatter(logging.Formatter):
+    def __init__(self, *args, **kwargs):
+        super(_ColorfulFormatter, self).__init__(*args, **kwargs)
+
+    def formatMessage(self, record):
+        log = super(_ColorfulFormatter, self).formatMessage(record)
+        if record.levelno == logging.WARNING:
+            prefix = colored("WARNING", "red")
+        elif record.levelno == logging.ERROR or record.levelno == logging.CRITICAL:
+            prefix = colored("ERROR", "red", attrs=["underline"])
+        else:
+            return log
+        return prefix + " " + log
+
 
 def add_time_to_path(logging_filepath):
     logging_filepath = Path(logging_filepath)
@@ -47,7 +66,7 @@ def setup_logging(logging_filepath,
 
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(
-        logging.Formatter(log_format, datefmt=stream_date_format))
+        _ColorfulFormatter(log_format, datefmt=stream_date_format))
     console_handler.setLevel(console_level)
     if logger != logging.root:
         # Remove the default console handler.
