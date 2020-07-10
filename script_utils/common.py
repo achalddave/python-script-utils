@@ -63,10 +63,17 @@ def common_setup(log_name,
     logging.debug('Called common_setup from:\n' + ('\n'.join(paths)))
 
     if save_git_state:
-        subprocess.call([
-            str(git_state_dir / 'save_git_state.sh'),
-            log_file.with_suffix('.git-state')
-        ])
+        p = subprocess.Popen(['git', 'rev-parse', '--git-dir'],
+                             stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL)
+        p.communicate()
+        if p.returncode == 0:
+            subprocess.call([
+                str(git_state_dir / 'save_git_state.sh'),
+                log_file.with_suffix('.git-state')
+            ])
+        else:
+            logging.warning(f"Not a git repo; not saving git state.")
 
     if args is not None:
         import pprint
