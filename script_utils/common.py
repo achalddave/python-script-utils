@@ -60,7 +60,7 @@ def common_setup(log_name,
         f'{Path(x.filename).resolve()}, line {x.lineno}'
         for x in traceback.extract_stack()[:-1]
     ]
-    logging.debug('Called common_setup from:\n' + ('\n'.join(paths)))
+    logger.debug('Called common_setup from:\n' + ('\n'.join(paths)))
 
     if save_git_state:
         p = subprocess.Popen(['git', 'rev-parse', '--git-dir'],
@@ -73,14 +73,14 @@ def common_setup(log_name,
                 log_file.with_suffix('.git-state')
             ])
         else:
-            logging.warning(f"Not a git repo; not saving git state.")
+            logger.warning(f"Not a git repo; not saving git state.")
 
     if args is not None:
         import pprint
         import sys
-        logging.debug('Args:\n%s', pprint.pformat(vars(args)))
+        logger.debug('Args:\n%s', pprint.pformat(vars(args)))
         args_pretty = 'python ' + (' '.join(
             [('\\\n' + x) if x.startswith('-') else x for x in sys.argv]))
-        logging.debug('Full command:\n%s', args_pretty)
+        logger.debug('Full command:\n%s', args_pretty)
 
     return file_logger
